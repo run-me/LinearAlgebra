@@ -8,14 +8,15 @@ def plot_image_vectors(img, scale, trans_matrix_1, trans_matrix_2):
     im = np.divide(img, 255)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    for row in im[90:110]:
-        for col in row[130:140]:
-            ax.quiver(0, 0, 0, col[0], col[1], col[2], color='blue')
+    for row in im[90:160]:
+        for col in row[130:133]:
+            ax.quiver(0, 0, 0, col[0], col[1], col[2], color='blue', arrow_length_ratio=0.1)
             transformed_vector_1 = np.dot(col, trans_matrix_1)
-            ax.quiver(0, 0, 0, transformed_vector_1[0], transformed_vector_1[1], transformed_vector_1[2], color="red")
+            ax.quiver(0, 0, 0, transformed_vector_1[0], transformed_vector_1[1], transformed_vector_1[2], color="red",
+                      arrow_length_ratio=0.1)
             transformed_vector_2 = np.dot(col, trans_matrix_2)
             ax.quiver(0, 0, 0, transformed_vector_2[0], transformed_vector_2[1], transformed_vector_2[2],
-                      color="#0EFF09")
+                      color="#0EFF09", arrow_length_ratio=0.1)
     
     ax.set_xlim(-1.3, 1.5)
     ax.set_xlabel("R channel", size='xx-large')
