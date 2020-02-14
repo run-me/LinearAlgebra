@@ -15,26 +15,32 @@ def visualize_transformation(vector, trans_matrix):
     except ValueError:
         raise ValueError("check input vector and transform matrix dimensions")
     
-    ax.quiver(0, 0, vector[0], vector[1], color='blue', angles='xy', scale_units='xy', scale=1, label="input vector")
-    ax.quiver(0, 0, mapped_vector[0], mapped_vector[1], angles='xy', scale_units='xy', color='green', scale=1,
-              label="transformed vector")
+    for v in vector:
+        ax.quiver(0, 0, v[0], v[1], angles='xy', scale_units='xy', scale=1, color='green')
     
-    # Add the grid for the plot
+    # apply transformation
+    for i, i_vector in enumerate(vector):
+        vector[i] = np.dot(trans_matrix, i_vector)
+    
+    for v1 in vector:
+        ax.quiver(0, 0, v1[0], v1[1], angles='xy', scale_units='xy', scale=1, color='red')
+    
+    # Add the grid
     ax.grid(which='major', axis='both', linestyle='-')
     
-    ax.set_xlim(-4, 4)
-    ax.set_ylim(-4, 4)
-    ax.set_ylabel("y axis", color='blue')
-    ax.set_xlabel("x axis", color='blue')
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-3, 3)
+    ax.set_ylabel("y axis", color='red')
+    ax.set_xlabel("x axis", color='red')
     ax.legend()
     plt.show()
 
 
 if __name__ == "__main__":
     # construct the vector
-    inp_vector = np.array([1, 1])
+    inp_vector = np.random.randn(2, 2)
     # construct the transformation matrix
-    transform_matrix = np.array([[-1, -1], [0, 0]])
+    transform_matrix = np.array([[0, 1], [-1, 0]])
     
     # call visualization method to visualize transformation
     visualize_transformation(inp_vector, transform_matrix)
